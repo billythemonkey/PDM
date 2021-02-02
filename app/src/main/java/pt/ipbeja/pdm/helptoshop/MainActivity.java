@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,11 +28,17 @@ public class MainActivity extends AppCompatActivity {
     private List<Post> posts;
 
 
+    public static void start(Context context) {
+        Intent starter = new Intent(context, MainActivity.class);
+        context.startActivity(starter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        this.posts = AppDatabase.getInstance(getApplicationContext()).postDao().getAll();
 
         PostAdapter adapter = new PostAdapter(posts);
         RecyclerView view = findViewById(R.id.main_recycler_view);
@@ -44,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        this.posts = AppDatabase.getInstance(getApplicationContext()).postDao().getAll();
 
     }
 

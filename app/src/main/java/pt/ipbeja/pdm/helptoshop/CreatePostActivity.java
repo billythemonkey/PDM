@@ -50,10 +50,11 @@ public class CreatePostActivity extends AppCompatActivity implements OnMapReadyC
     public void onMapReady(GoogleMap googleMap) {
 
         googleMap.setOnMapClickListener(latLng -> {
+            marker.remove();
             this.marker = googleMap.addMarker(new MarkerOptions().position(latLng));
             marker.isDraggable();
         });
-
+        
     }
 
     public static void start(Context context) {
@@ -72,6 +73,7 @@ public class CreatePostActivity extends AppCompatActivity implements OnMapReadyC
                 marker.getPosition().latitude, marker.getPosition().longitude);
 
         AppDatabase.getInstance(this).postDao().insert(post);
+        MainActivity.start(this);
 
     }
 
